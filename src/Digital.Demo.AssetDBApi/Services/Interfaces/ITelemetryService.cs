@@ -7,8 +7,8 @@ namespace Otel.Demo.DataApi.Services.Interfaces
     {
         ActivitySource GetActivitySource();
 
-        Counter<long> GetAssetDataReqCounter();
+        Counter<long> GetAssetDetailsReqCounter();
 
-        Counter<long> GetAssetDataSeqReqCounter();
+        Counter<long> GetEventsReqCounter();
     }
 }

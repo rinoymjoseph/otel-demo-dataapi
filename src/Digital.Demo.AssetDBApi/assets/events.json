@@ -1,0 +1,26 @@
+[
+  {
+    "Condition/Sub-condition": "Cold Side Pressure difference has increased slightly compared to the Benchmark",
+    "Severity": 250,
+    "Possible Cause": "No immediate degradation in performance. Might result in Fouling/Leak in the next 8-12 weeks",
+    "Recommended Solution": "Schedule a check for Heat Exchange performance measurement and check on the cold side differential pressure sensor."
+  },
+  {
+    "Condition/Sub-condition": "Transmitter input is varying appropriately",
+    "Severity": 50,
+    "Possible Cause": "A write or set command has been executed that changed the device's configuration.",
+    "Recommended Solution": "Use Device Management aspect to compare configuration in device and the one in DTM. Perform a configuration upload or download as required to synchronise clear congifuration changed condition."
+  },
+  {
+    "Condition/Sub-condition": "Hardware status",
+    "Severity": 100,
+    "Possible Cause": "More status information is available that can be returned in the Field Device Status.",
+    "Recommended Solution": "Check detailed device diagnosis if possible."
+  },
+  {
+    "Condition/Sub-condition": "Device not calibrated",
+    "Severity": 50,
+    "Possible Cause": "Factory settings loaded or new device.",
+    "Recommended Solution": "Run auto adjust."
+  }
+]

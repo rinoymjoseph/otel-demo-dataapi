@@ -1,0 +1,13 @@
+[
+  {
+    "assetId": "4de1208e-d1b7-46a1-9743-8f2b39c3ad39",
+    "name": "Motor 1",
+    "variables": [
+      "speed",
+      "voltage",
+      "torque",
+      "current",
+      "rpm"
+    ]
+  }
+]

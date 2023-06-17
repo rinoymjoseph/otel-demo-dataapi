@@ -15,9 +15,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<ITelemetryService, TelemetryService>();
-builder.Services.AddScoped<IAssetService, AssetService>();
+builder.Services.AddScoped<IAssetDBService, AssetDBService>();
 
-string otel_exporter_url= builder.Configuration.GetValue<string>(AppConstants.URL_OTEL_EXPORTER);
+string otel_exporter_url = builder.Configuration.GetValue<string>(AppConstants.OTEL_EXPORTER_URL);
 
 builder.Services.AddOpenTelemetry()
     .ConfigureResource(builder => builder
@@ -25,8 +25,8 @@ builder.Services.AddOpenTelemetry()
     .WithTracing(builder => builder
         .AddSource(AppConstants.OTEL_SERVCICE_NAME)
         .AddAspNetCoreInstrumentation()
-        .AddHttpClientInstrumentation() //Required for baggage
-        .AddConsoleExporter()        
+        .AddHttpClientInstrumentation()
+        .AddConsoleExporter()
         .AddOtlpExporter(options =>
         {
             options.Endpoint = new Uri(otel_exporter_url);
@@ -47,18 +47,16 @@ builder.Services.AddHttpClient();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 
-app.UseRouting();
-
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
+app.MapControllers();
 
 app.Run();

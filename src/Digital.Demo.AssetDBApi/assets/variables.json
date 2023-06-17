@@ -1,0 +1,11 @@
+[
+  "speed",
+  "voltage",
+  "torque",
+  "current",
+  "rpm",
+  "torque",
+  "resistance",
+  "inductance",
+  "temperature"
+]

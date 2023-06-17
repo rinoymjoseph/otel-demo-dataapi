@@ -8,14 +8,15 @@ namespace Otel.Demo.DataApi.Services
     {
         private readonly ActivitySource _activitySource;
         public static Meter _meter = new(AppConstants.OTEL_SERVCICE_NAME);
-        private readonly Counter<long> _assetDataReqCounter;
-        private readonly Counter<long> _assetDataReqSeqCounter;
+        private readonly Counter<long> _getAssetDetailsReqCounter;
+        private readonly Counter<long> _getEventsReqCounter;
 
         public TelemetryService()
         {
             _activitySource = new ActivitySource(AppConstants.OTEL_SERVCICE_NAME);
-            _assetDataReqCounter = _meter.CreateCounter<long>(AppConstants.COUNTER_ASSET_GET_ASSET_DATA);
-            _assetDataReqSeqCounter = _meter.CreateCounter<long>(AppConstants.COUNTER_ASSET_GET_ASSET_DATA_SEQ);
+            _getAssetDetailsReqCounter = _meter.CreateCounter<long>(AppConstants.COUNTER_ASSETDB_GET_ASSET_DETAILS);
+            _getEventsReqCounter = _meter.CreateCounter<long>(AppConstants.COUNTER_ASSETDB_GET_EVENTS);
+
         }
 
         public ActivitySource GetActivitySource()
@@ -23,14 +24,14 @@ namespace Otel.Demo.DataApi.Services
             return _activitySource;
         }
 
-        public Counter<long> GetAssetDataReqCounter()
+        public Counter<long> GetAssetDetailsReqCounter()
         {
-            return _assetDataReqCounter;
+            return _getAssetDetailsReqCounter;
         }
 
-        public Counter<long> GetAssetDataSeqReqCounter()
+        public Counter<long> GetEventsReqCounter()
         {
-            return _assetDataReqSeqCounter;
+            return _getEventsReqCounter;
         }
     }
 }
