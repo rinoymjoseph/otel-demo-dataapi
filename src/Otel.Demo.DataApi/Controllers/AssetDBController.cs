@@ -4,7 +4,7 @@ using OpenTelemetry;
 
 namespace Otel.Demo.DataApi.Controllers
 {
-    [Route("assetdb")]
+    [Route("data")]
     [ApiController]
     public class AssetDBController : ControllerBase
     {
