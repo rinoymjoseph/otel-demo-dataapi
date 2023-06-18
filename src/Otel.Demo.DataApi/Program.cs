@@ -15,7 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<ITelemetryService, TelemetryService>();
-builder.Services.AddScoped<IAssetDBService, AssetDBService>();
+builder.Services.AddScoped<IAssetDataService, AssetDataService>();
 
 string otel_exporter_url = builder.Configuration.GetValue<string>(AppConstants.OTEL_EXPORTER_URL);
 

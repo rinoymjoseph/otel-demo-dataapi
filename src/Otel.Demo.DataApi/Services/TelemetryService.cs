@@ -14,8 +14,8 @@ namespace Otel.Demo.DataApi.Services
         public TelemetryService()
         {
             _activitySource = new ActivitySource(AppConstants.OTEL_SERVCICE_NAME);
-            _getAssetDetailsReqCounter = _meter.CreateCounter<long>(AppConstants.COUNTER_ASSETDB_GET_ASSET_DETAILS);
-            _getEventsReqCounter = _meter.CreateCounter<long>(AppConstants.COUNTER_ASSETDB_GET_EVENTS);
+            _getAssetDetailsReqCounter = _meter.CreateCounter<long>(AppConstants.COUNTER_DATA_GET_ASSET_DETAILS);
+            _getEventsReqCounter = _meter.CreateCounter<long>(AppConstants.COUNTER_DATA_GET_EVENTS);
 
         }
 

@@ -2,7 +2,7 @@
 
 namespace Otel.Demo.DataApi.Services.Interfaces
 {
-    public interface IAssetDBService
+    public interface IAssetDataService
     {
         Task<JsonObject?> GetAssetDetails(string? assetId);
 

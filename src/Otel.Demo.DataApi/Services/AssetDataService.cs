@@ -3,12 +3,12 @@ using System.Text.Json.Nodes;
 
 namespace Otel.Demo.DataApi.Services
 {
-    public class AssetDBService : IAssetDBService
+    public class AssetDataService : IAssetDataService
     {
         private string _projectRootPath;
         private readonly ITelemetryService _telemetryService;
 
-        public AssetDBService(IHostEnvironment hostEnvironment, ITelemetryService telemetryService)
+        public AssetDataService(IHostEnvironment hostEnvironment, ITelemetryService telemetryService)
         {
             _projectRootPath = hostEnvironment.ContentRootPath;
             _telemetryService = telemetryService;

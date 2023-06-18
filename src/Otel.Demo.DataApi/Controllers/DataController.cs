@@ -6,16 +6,16 @@ namespace Otel.Demo.DataApi.Controllers
 {
     [Route("data")]
     [ApiController]
-    public class AssetDBController : ControllerBase
+    public class DataController : ControllerBase
     {
         private readonly ITelemetryService _telemetryService;
-        private readonly IAssetDBService _assetDBService;
+        private readonly IAssetDataService _assetDataService;
 
-        public AssetDBController(IConfiguration configuration, IHttpClientFactory httpClientFactory,
-           ITelemetryService telemetryService, IAssetDBService assetDBService)
+        public DataController(IConfiguration configuration, IHttpClientFactory httpClientFactory,
+           ITelemetryService telemetryService, IAssetDataService assetDataService)
         {
             _telemetryService = telemetryService;
-            _assetDBService = assetDBService;
+            _assetDataService = assetDataService;
         }
 
         [HttpGet("GetAssetDetails/{assetId}")]
@@ -23,7 +23,7 @@ namespace Otel.Demo.DataApi.Controllers
         {
             _telemetryService.GetAssetDetailsReqCounter().Add(1,
                 new("Action", nameof(GetAssetDetails)),
-                new("Controller", nameof(AssetDBController)));
+                new("Controller", nameof(DataController)));
 
             var contextId = Baggage.GetBaggage("ContextId");
             if (string.IsNullOrEmpty(contextId))
@@ -35,7 +35,7 @@ namespace Otel.Demo.DataApi.Controllers
             activity_GetAssetData?.SetTag("ContextId", contextId);
             activity_GetAssetData?.AddEvent(new("GetAssetDetails"));
             Baggage.SetBaggage("ContextId", contextId);
-            var result = await _assetDBService.GetAssetDetails(assetId);
+            var result = await _assetDataService.GetAssetDetails(assetId);
             return Ok(result);
         }
 
@@ -44,7 +44,7 @@ namespace Otel.Demo.DataApi.Controllers
         {
             _telemetryService.GetEventsReqCounter().Add(1,
                 new("Action", nameof(GetEvents)),
-                new("Controller", nameof(AssetDBController)));
+                new("Controller", nameof(DataController)));
 
             var contextId = Baggage.GetBaggage("ContextId");
             if (string.IsNullOrEmpty(contextId))
@@ -56,7 +56,7 @@ namespace Otel.Demo.DataApi.Controllers
             activity_GetEvents?.SetTag("ContextId", contextId);
             activity_GetEvents?.AddEvent(new("GetEvents"));
             Baggage.SetBaggage("ContextId", contextId);
-            var result = await _assetDBService.GetEvents(assetId);
+            var result = await _assetDataService.GetEvents(assetId);
             return Ok(result);
         }
     }
