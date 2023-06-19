@@ -4,16 +4,17 @@ using OpenTelemetry;
 
 namespace Otel.Demo.DataApi.Controllers
 {
-    [Route("data")]
+    [Route("assetdata")]
     [ApiController]
-    public class DataController : ControllerBase
+    public class AssetDataController : ControllerBase
     {
+        private readonly ILogger _logger;
         private readonly ITelemetryService _telemetryService;
         private readonly IAssetDataService _assetDataService;
 
-        public DataController(IConfiguration configuration, IHttpClientFactory httpClientFactory,
-           ITelemetryService telemetryService, IAssetDataService assetDataService)
+        public AssetDataController(ILogger<AssetDataController> logger, ITelemetryService telemetryService, IAssetDataService assetDataService)
         {
+            _logger = logger;
             _telemetryService = telemetryService;
             _assetDataService = assetDataService;
         }
@@ -21,9 +22,10 @@ namespace Otel.Demo.DataApi.Controllers
         [HttpGet("GetAssetDetails/{assetId}")]
         public async Task<IActionResult> GetAssetDetails(string assetId= "4de1208e-d1b7-46a1-9743-8f2b39c3ad39")
         {
+            _logger.LogInformation("Entering GetAssetDetails");
             _telemetryService.GetAssetDetailsReqCounter().Add(1,
                 new("Action", nameof(GetAssetDetails)),
-                new("Controller", nameof(DataController)));
+                new("Controller", nameof(AssetDataController)));
 
             var contextId = Baggage.GetBaggage("ContextId");
             if (string.IsNullOrEmpty(contextId))
@@ -36,27 +38,7 @@ namespace Otel.Demo.DataApi.Controllers
             activity_GetAssetData?.AddEvent(new("GetAssetDetails"));
             Baggage.SetBaggage("ContextId", contextId);
             var result = await _assetDataService.GetAssetDetails(assetId);
-            return Ok(result);
-        }
-
-        [HttpGet("GetEvents/{assetId}")]
-        public async Task<IActionResult> GetEvents(string assetId = "4de1208e-d1b7-46a1-9743-8f2b39c3ad39")
-        {
-            _telemetryService.GetEventsReqCounter().Add(1,
-                new("Action", nameof(GetEvents)),
-                new("Controller", nameof(DataController)));
-
-            var contextId = Baggage.GetBaggage("ContextId");
-            if (string.IsNullOrEmpty(contextId))
-            {
-                contextId = Guid.NewGuid().ToString();
-            }
-            using var activity_GetEvents = _telemetryService.GetActivitySource().StartActivity("GetEvents");
-            activity_GetEvents?.SetTag("AssetId", assetId);
-            activity_GetEvents?.SetTag("ContextId", contextId);
-            activity_GetEvents?.AddEvent(new("GetEvents"));
-            Baggage.SetBaggage("ContextId", contextId);
-            var result = await _assetDataService.GetEvents(assetId);
+            _logger.LogInformation("Exiting GetAssetDetails");
             return Ok(result);
         }
     }

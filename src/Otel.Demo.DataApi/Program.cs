@@ -1,9 +1,10 @@
-using Otel.Demo.DataApi;
-using Otel.Demo.DataApi.Services;
-using Otel.Demo.DataApi.Services.Interfaces;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using Otel.Demo.DataApi;
+using Otel.Demo.DataApi.Services;
+using Otel.Demo.DataApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,11 +16,23 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<ITelemetryService, TelemetryService>();
+builder.Services.AddSingleton<IJsonDataService, JsonDataService>();
 builder.Services.AddScoped<IAssetDataService, AssetDataService>();
+builder.Services.AddScoped<IEventDataService, EventDataService>();
+builder.Services.AddScoped<IUserDataService, UserDataService>();
 
 string otel_exporter_url = builder.Configuration.GetValue<string>(AppConstants.OTEL_EXPORTER_URL);
 
-builder.Services.AddOpenTelemetry()
+builder.Services
+    .AddLogging((loggingBuilder) => loggingBuilder
+        .AddOpenTelemetry(options =>
+            options
+                .AddConsoleExporter()
+                .AddOtlpExporter(options =>
+                {
+                    options.Endpoint = new Uri(otel_exporter_url);
+                })))
+    .AddOpenTelemetry()
     .ConfigureResource(builder => builder
     .AddService(serviceName: AppConstants.OTEL_SERVCICE_NAME))
     .WithTracing(builder => builder
@@ -41,7 +54,8 @@ builder.Services.AddOpenTelemetry()
         .AddOtlpExporter(options =>
         {
             options.Endpoint = new Uri(otel_exporter_url);
-        }));
+        }))
+    ;
 builder.Services.AddHttpClient();
 
 var app = builder.Build();
