@@ -18,7 +18,7 @@ namespace Otel.Demo.DataApi.Services
 
         public async Task<JsonArray?> GetEvents(string? assetId)
         {
-            _logger.LogInformation("Entering GetEvents");
+            _logger.LogInformation($"Entering GetEvents : {assetId}");
             using var activity_GetEvents = _telemetryService.GetActivitySource().StartActivity("GetEvents");
             Random random = new Random();
             int delay = random.Next(200, 2000);
@@ -26,7 +26,7 @@ namespace Otel.Demo.DataApi.Services
             var filepath = Path.Combine(_projectRootPath, "assets//events.json");
             var jsonData = System.IO.File.ReadAllText(filepath);
             var data = JsonNode.Parse(jsonData)?.AsArray();
-            _logger.LogInformation("Exiting GetEvents");
+            _logger.LogInformation($"Exiting GetEvents : {assetId}");
             return data;
         }
     }

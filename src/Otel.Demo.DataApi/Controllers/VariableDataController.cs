@@ -23,7 +23,7 @@ namespace Otel.Demo.DataApi.Controllers
         [HttpGet("GetVariableValue/{variableName}")]
         public async Task<IActionResult> GetVariableValue(string variableName = "test")
         {
-            _logger.LogInformation("Entering GetVariableValue");
+            _logger.LogInformation($"Entering GetVariableValue : {variableName}");
             _telemetryService.GetEventsReqCounter().Add(1,
                 new("Action", nameof(GetVariableValue)),
                 new("Controller", nameof(VariableDataController)));
@@ -38,7 +38,7 @@ namespace Otel.Demo.DataApi.Controllers
             activity_GetEvents?.AddEvent(new("GetVariableValue"));
             Baggage.SetBaggage("ContextId", contextId);
             var result = await _variableDataService.GetVariableValue(variableName);
-            _logger.LogInformation("Exiting GetVariableValue");
+            _logger.LogInformation($"Exiting GetVariableValue : {variableName}");
             return Ok(result);
         }
     }

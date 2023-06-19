@@ -22,7 +22,7 @@ namespace Otel.Demo.DataApi.Controllers
         [HttpGet("GetEvents/{assetId}")]
         public async Task<IActionResult> GetEvents(string assetId = "4de1208e-d1b7-46a1-9743-8f2b39c3ad39")
         {
-            _logger.LogInformation("Entering GetEvents");
+            _logger.LogInformation($"Entering GetEvents : {assetId}");
             _telemetryService.GetEventsReqCounter().Add(1,
                 new("Action", nameof(GetEvents)),
                 new("Controller", nameof(EventDataController)));
@@ -38,7 +38,7 @@ namespace Otel.Demo.DataApi.Controllers
             activity_GetEvents?.AddEvent(new("GetEvents"));
             Baggage.SetBaggage("ContextId", contextId);
             var result = await _eventDataService.GetEvents(assetId);
-            _logger.LogInformation("Exiting GetEvents");
+            _logger.LogInformation($"Exiting GetEvents : {assetId}");
             return Ok(result);
         }
     }

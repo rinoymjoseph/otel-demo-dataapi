@@ -20,20 +20,6 @@ namespace Otel.Demo.DataApi.Services
             _jsonDataService = jsonDatService;
         }
 
-        public async Task<JsonArray?> GetEvents(string? assetId)
-        {
-            _logger.LogInformation("Entering GetEvents");
-            using var activity_GetEvents = _telemetryService.GetActivitySource().StartActivity("GetEvents");
-            Random random = new Random();
-            int delay = random.Next(200, 2000);
-            await Task.Delay(delay);
-            var filepath = Path.Combine(_projectRootPath, "assets//events.json");
-            var jsonData = System.IO.File.ReadAllText(filepath);
-            var data = JsonNode.Parse(jsonData)?.AsArray();
-            _logger.LogInformation("Exiting GetEvents");
-            return data;
-        }
-
         public async Task<AssetModel?> GetAssetDetails(string? assetId)
         {
             _logger.LogInformation("Entering GetAssetDetails");
