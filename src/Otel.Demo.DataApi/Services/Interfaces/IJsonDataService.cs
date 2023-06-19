@@ -3,5 +3,9 @@
     public interface IJsonDataService
     {
         string GetUserName();
+
+        string GetAssetName();
+
+        string GetPropertyName();
     }
 }

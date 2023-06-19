@@ -1,9 +1,10 @@
-﻿using System.Text.Json.Nodes;
+﻿using Otel.Demo.DataApi.Models;
+using System.Text.Json.Nodes;
 
 namespace Otel.Demo.DataApi.Services.Interfaces
 {
     public interface IAssetDataService
     {
-        Task<JsonObject?> GetAssetDetails(string? assetId);
+        Task<AssetModel?> GetAssetDetails(string? assetId);
     }
 }

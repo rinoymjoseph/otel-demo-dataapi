@@ -20,6 +20,7 @@ builder.Services.AddSingleton<IJsonDataService, JsonDataService>();
 builder.Services.AddScoped<IAssetDataService, AssetDataService>();
 builder.Services.AddScoped<IEventDataService, EventDataService>();
 builder.Services.AddScoped<IUserDataService, UserDataService>();
+builder.Services.AddScoped<IVariableDataService, VariableDataService>();
 
 string otel_exporter_url = builder.Configuration.GetValue<string>(AppConstants.OTEL_EXPORTER_URL);
 
