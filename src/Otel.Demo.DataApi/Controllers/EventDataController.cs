@@ -35,7 +35,6 @@ namespace Otel.Demo.DataApi.Controllers
             using var activity_GetEvents = _telemetryService.GetActivitySource().StartActivity("GetEvents");
             activity_GetEvents?.SetTag("AssetId", assetId);
             activity_GetEvents?.SetTag("ContextId", contextId);
-            activity_GetEvents?.AddEvent(new("GetEvents"));
             Baggage.SetBaggage("ContextId", contextId);
             var result = await _eventDataService.GetEvents(assetId);
             _logger.LogInformation($"Exiting GetEvents : {assetId}");

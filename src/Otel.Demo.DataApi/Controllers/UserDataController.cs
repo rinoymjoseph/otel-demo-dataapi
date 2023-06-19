@@ -34,7 +34,6 @@ namespace Otel.Demo.DataApi.Controllers
             }
             using var activity_GetEvents = _telemetryService.GetActivitySource().StartActivity("GetUserName");
             activity_GetEvents?.SetTag("ContextId", contextId);
-            activity_GetEvents?.AddEvent(new("GetUserName"));
             Baggage.SetBaggage("ContextId", contextId);
             var result = _userDataService.GetUserName();
             _logger.LogInformation("Exiting GetUserName");
