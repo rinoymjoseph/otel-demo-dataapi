@@ -55,7 +55,7 @@ namespace Otel.Demo.DataApi.Services
             return middleNames;
         }
 
-        public string GetUserName()
+        public string GetUsername()
         {
             Random random = new Random();
             var firstNamescount = firstNames.Count;
@@ -66,7 +66,17 @@ namespace Otel.Demo.DataApi.Services
             int middleNamesIndex = random.Next(0, middleNamescount - 1);
             string middleName = firstNames[middleNamesIndex]!.ToString();
 
-            return $"{firstName} {middleName}";
+            int time_millis = DateTime.Now.Millisecond;
+            int mod_val = time_millis % 10;
+
+            if (mod_val == 0)
+            {
+                throw new Exception("Error while fetching Username");
+            }
+            else
+            {
+                return $"{firstName} {middleName}";
+            }
         }
 
         public string GetAssetName()

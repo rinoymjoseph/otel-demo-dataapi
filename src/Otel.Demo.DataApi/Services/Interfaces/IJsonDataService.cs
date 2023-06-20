@@ -2,7 +2,7 @@
 {
     public interface IJsonDataService
     {
-        string GetUserName();
+        string GetUsername();
 
         string GetAssetName();
 

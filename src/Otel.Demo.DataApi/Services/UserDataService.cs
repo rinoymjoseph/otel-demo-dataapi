@@ -14,9 +14,9 @@ namespace Otel.Demo.DataApi.Services
             _jsonDataService = jsonDataService;
         }
 
-        public string GetUserName()
+        public string GetUsername()
         {
-            return _jsonDataService.GetUserName();
+            return _jsonDataService.GetUsername();
         }
     }
 }

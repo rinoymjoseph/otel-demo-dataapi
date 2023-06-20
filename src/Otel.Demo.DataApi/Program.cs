@@ -3,6 +3,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Otel.Demo.DataApi;
+using Otel.Demo.DataApi.Filters;
 using Otel.Demo.DataApi.Services;
 using Otel.Demo.DataApi.Services.Interfaces;
 
@@ -10,7 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(typeof(ExceptionFilter));
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
