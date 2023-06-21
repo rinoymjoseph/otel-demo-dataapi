@@ -93,7 +93,7 @@ namespace Otel.Demo.DataApi.Services
             int time_millis = DateTime.Now.Millisecond;
             int mod_val = time_millis % 20;
 
-            if (mod_val == 20)
+            if (mod_val == 0)
             {
                 throw new Exception("Error while fetching Assetname");
             }
