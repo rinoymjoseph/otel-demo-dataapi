@@ -20,8 +20,17 @@ namespace Otel.Demo.DataApi.Services
             Random random = new Random();
             int delay = random.Next(250, 2500);
             await Task.Delay(delay);
-            _logger.LogInformation($"Exiting GetVariableValue : {variableName}");
-            return random.NextDouble() * 10;
+            int time_millis = DateTime.Now.Millisecond;
+            int mod_val = time_millis % 20;
+            if (mod_val == 20)
+            {
+                throw new Exception($"Error while fetching variable value for variableName");
+            }
+            else
+            {
+                _logger.LogInformation($"Exiting GetVariableValue : {variableName}");
+                return random.NextDouble() * 10;
+            }
         }
     }
 }

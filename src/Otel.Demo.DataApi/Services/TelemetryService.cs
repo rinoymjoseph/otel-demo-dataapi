@@ -74,7 +74,7 @@ namespace Otel.Demo.DataApi.Services
 
         public Counter<long> GetUsernameReqCounter()
         {
-            return _getEventsReqCounter;
+            return _getUserameReqCounter;
         }
         public Counter<long> GetUsernameReqSuccessCounter()
         {
