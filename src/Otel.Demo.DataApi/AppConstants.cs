@@ -3,7 +3,10 @@
     public class AppConstants
     {
         public const string OTEL_SERVCICE_NAME = "DataApi";
-        public const string OTEL_EXPORTER_URL = "otel_exporter_url";
+        public const string OTEL_EXPORTER_URL = "Otel:ExporterUrl";
+        public const string OTEL_ENABLE_LOGGING = "Otel:EnableLogging";
+        public const string OTEL_ENABLE_TRACING = "Otel:EnableTracing";
+        public const string OTEL_ENABLE_METRICS = "Otel:EnableMetrics";
 
         public const string COUNTER_DATA_API_GET_ASSET_DETAILS_REQUESTS = "data_api_get_asset_details_requests";
         public const string COUNTER_DATA_API_GET_ASSET_DETAILS_REQUESTS_SUCCESS = "data_api_get_asset_details_requests_success";
