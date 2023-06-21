@@ -23,7 +23,7 @@ namespace Otel.Demo.DataApi.Controllers
         public IActionResult GetUsername()
         {
             _logger.LogInformation("Entering GetUsername");
-            _telemetryService.GetEventsReqCounter().Add(1,
+            _telemetryService.GetUsernameReqCounter().Add(1,
                 new("Action", nameof(GetUsername)),
                 new("Controller", nameof(UserDataController)));
 
@@ -35,9 +35,23 @@ namespace Otel.Demo.DataApi.Controllers
             using var activity_GetEvents = _telemetryService.GetActivitySource().StartActivity("GetUsername");
             activity_GetEvents?.SetTag("ContextId", contextId);
             Baggage.SetBaggage("ContextId", contextId);
-            var result = _userDataService.GetUsername();
-            _logger.LogInformation("Exiting GetUserName");
-            return Ok(result);
+
+            try
+            {
+                _telemetryService.GetUsernameReqSuccessCounter().Add(1,
+                    new("Action", nameof(GetUsername)),
+                    new("Controller", nameof(UserDataController)));
+                var result = _userDataService.GetUsername();
+                _logger.LogInformation("Exiting GetUserName");
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                _telemetryService.GetUsernameReqFailureCounter().Add(1,
+                    new("Action", nameof(GetUsername)),
+                    new("Controller", nameof(UserDataController)));
+                throw;
+            }
         }
     }
 }

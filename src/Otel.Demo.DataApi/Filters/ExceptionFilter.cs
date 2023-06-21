@@ -15,6 +15,7 @@ namespace Otel.Demo.DataApi.Filters
         {
             _logger = logger;
         }
+
         public override Task OnExceptionAsync(ExceptionContext context)
         {
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;          

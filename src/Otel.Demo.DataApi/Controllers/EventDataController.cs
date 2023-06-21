@@ -36,9 +36,23 @@ namespace Otel.Demo.DataApi.Controllers
             activity_GetEvents?.SetTag("AssetId", assetId);
             activity_GetEvents?.SetTag("ContextId", contextId);
             Baggage.SetBaggage("ContextId", contextId);
-            var result = await _eventDataService.GetEvents(assetId);
-            _logger.LogInformation($"Exiting GetEvents : {assetId}");
-            return Ok(result);
+
+            try
+            {
+                var result = await _eventDataService.GetEvents(assetId);
+                _telemetryService.GetEventsReqSuccessCounter().Add(1,
+                    new("Action", nameof(GetEvents)),
+                    new("Controller", nameof(EventDataController)));
+                _logger.LogInformation($"Exiting GetEvents : {assetId}");
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                _telemetryService.GetEventsReqFailureCounter().Add(1,
+                    new("Action", nameof(GetEvents)),
+                    new("Controller", nameof(EventDataController)));
+                throw;
+            }
         }
     }
 }

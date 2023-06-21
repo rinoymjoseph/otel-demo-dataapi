@@ -67,7 +67,7 @@ namespace Otel.Demo.DataApi.Services
             string middleName = firstNames[middleNamesIndex]!.ToString();
 
             int time_millis = DateTime.Now.Millisecond;
-            int mod_val = time_millis % 10;
+            int mod_val = time_millis % 20;
 
             if (mod_val == 0)
             {
@@ -90,7 +90,17 @@ namespace Otel.Demo.DataApi.Services
             int personIndex = random.Next(0, personsCount - 1);
             string person = persons[personIndex]!.ToString();
 
-            return $"{adjective} {person}";
+            int time_millis = DateTime.Now.Millisecond;
+            int mod_val = time_millis % 1;
+
+            if (mod_val == 20)
+            {
+                throw new Exception("Error while fetching Assetname");
+            }
+            else
+            {
+                return $"{adjective} {person}";
+            }      
         }
 
         public string GetPropertyName()
@@ -104,7 +114,17 @@ namespace Otel.Demo.DataApi.Services
             int propertiesIndex = random.Next(0, propertiesCount - 1);
             string property = properties[propertiesIndex]!.ToString();
 
-            return $"{equipment} {property}";
+            int time_millis = DateTime.Now.Millisecond;
+            int mod_val = time_millis % 20;
+
+            if (mod_val == 0)
+            {
+                throw new Exception("Error while fetching PropertyName");
+            }
+            else
+            {
+                return $"{equipment} {property}";
+            }      
         }
     }
 }
