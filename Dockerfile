@@ -15,7 +15,15 @@ RUN dotnet restore ./src/Otel.Demo.DataApi/Otel.Demo.DataApi.csproj -r linux-x64
 COPY . .
 
 # publish app
-RUN dotnet publish ./src/Otel.Demo.DataApi/ -c release -o build -r linux-x64 -p:PublishTrimmed=true --self-contained true --no-restore
+RUN dotnet publish ./src/Otel.Demo.DataApi/ \
+    -c Release \
+    -o build \
+    -r linux-x64 \
+    --self-contained true \
+    -p:PublishTrimmed=true \
+    -p:PublishSingleFile=true \
+    -p:EnableCompressionInSingleFile=true \
+    --no-restore
 
 # Stage - Deps
 FROM registry.access.redhat.com/ubi9/ubi-minimal:9.4-1227.1726694542 AS deps
