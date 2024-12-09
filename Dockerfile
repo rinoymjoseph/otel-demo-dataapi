@@ -17,8 +17,15 @@ COPY . .
 # publish app
 RUN dotnet publish ./src/Otel.Demo.DataApi/ -c release -o build -r linux-x64 -p:PublishTrimmed=true --self-contained true --no-restore
 
+# Stage - Deps
+FROM registry.access.redhat.com/ubi9/ubi-minimal:9.4-1227.1726694542 AS deps
+
+# Install libstdc++ and add a non-root user
+RUN microdnf install -y libstdc++ && \
+    microdnf clean all
+
 # Stage - Run
-FROM registry.access.redhat.com/ubi9/ubi-minimal:9.4-1227.1726694542
+FROM registry.access.redhat.com/ubi9/ubi-micro:9.4-15
 
 # Set ENV variables
 ENV ASPNETCORE_URLS=http://+:8080
@@ -28,13 +35,16 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 # Expose port 8080
 EXPOSE 8080
 
-# Install libstdc++ and add a non-root user
-RUN microdnf install -y libstdc++ shadow-utils && \
-    useradd -r -u 1001 appuser && \
-    microdnf clean all
+# Add a non-root user
+RUN mkdir /home/appuser && \
+    echo "appuser:x:1001:1001::/home/appuser:/sbin/nologin" >> /etc/passwd && \
+    echo "appuser:x:1001:" >> /etc/group
 
 # Switch to non-root user
 USER 1001
+
+# Copy libstdc++.so.6
+COPY --from=deps /lib64/libstdc++.so.6 /lib64/libstdc++.so.6
 
 # Create a work directory
 WORKDIR /app
