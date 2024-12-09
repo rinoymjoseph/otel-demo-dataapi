@@ -1,5 +1,5 @@
 mode: Mainline
-next-version: 1.1.0  # Start from 1.1.0
+#next-version: 1.1.0  # Start from 1.1.0
 
 branches:
   main:
@@ -8,9 +8,9 @@ branches:
     increment: Patch      # Default increment is Patch (e.g., 1.1.1 -> 1.1.2)
     is-mainline: true
 
-# Commit message patterns for version bumps
-#major-version-bump-message: '\+semver:\s?(breaking|major)'
-#minor-version-bump-message: '\+semver:\s?(feature|minor)'
-#patch-version-bump-message: '\+semver:\s?(fix|patch)'
+Commit message patterns for version bumps
+major-version-bump-message: '\+semver:\s?(breaking|major)'
+minor-version-bump-message: '\+semver:\s?(feature|minor)'
+patch-version-bump-message: '\+semver:\s?(fix|patch)'
 
-#commit-message-incrementing: Enabled
+commit-message-incrementing: Enabled
