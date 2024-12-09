@@ -28,6 +28,13 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 # Expose port 8080
 EXPOSE 8080
 
+# Create a non-root user and group
+RUN microdnf install shadow-utils && \
+    useradd -r -u 1001 appuser
+
+# Switch to the non-root user
+USER 1001
+
 # Create a work directory
 WORKDIR /app
 
