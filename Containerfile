@@ -29,7 +29,7 @@ RUN dotnet publish ./src/Otel.Demo.DataApi/ \
 FROM registry.access.redhat.com/ubi9/ubi-minimal:9.4-1227.1726694542 AS deps
 
 # Install libstdc++ and add a non-root user
-RUN microdnf install -y libstdc++ && \
+RUN microdnf install -y libstdc++ zlib && \
     microdnf clean all
 
 # Stage - Run
@@ -51,8 +51,9 @@ RUN mkdir /home/appuser && \
 # Switch to non-root user
 USER 1001
 
-# Copy libstdc++.so.6
+# Copy libstdc++ and zlib from the deps stage
 COPY --from=deps /lib64/libstdc++.so.6 /lib64/libstdc++.so.6
+COPY --from=deps /lib64/libz.so.1 /lib64/libz.so.1
 
 # Create a work directory
 WORKDIR /app
