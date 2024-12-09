@@ -1,20 +1,16 @@
 mode: Mainline
+next-version: 1.1.0  # Start from 1.1.0
+
 branches:
   main:
     regex: ^master$|^main$
     is-release-branch: true
-    increment: Patch
+    increment: Patch      # Default increment is Patch (e.g., 1.1.1 -> 1.1.2)
     is-mainline: true
-  dev:
-    regex: ^dev?[/-]
-    mode: ContinuousDeployment
-    tag: dev
-    is-release-branch: false
-    increment: Inherit
-    source-branches: ['main']
-    is-mainline: false
+
+# Commit message patterns for version bumps
 major-version-bump-message: '\+semver:\s?(breaking|major)'
 minor-version-bump-message: '\+semver:\s?(feature|minor)'
 patch-version-bump-message: '\+semver:\s?(fix|patch)'
+
 commit-message-incrementing: Enabled
-#next-version: 1.1.0
