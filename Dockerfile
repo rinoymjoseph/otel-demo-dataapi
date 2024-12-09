@@ -1,6 +1,6 @@
 #START 
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 # WorkDir
 WORKDIR /app
@@ -18,7 +18,7 @@ COPY . .
 RUN dotnet publish ./src/Otel.Demo.DataApi/ -c release -o build -r linux-x64 -p:PublishTrimmed=true --self-contained true --no-restore
 
 # Stage - Run
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.7
+FROM registry.access.redhat.com/ubi9/ubi-micro:9.4-15
 
 # Set ENV variables
 ENV ASPNETCORE_URLS=http://+:8080
