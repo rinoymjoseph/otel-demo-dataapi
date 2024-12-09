@@ -28,9 +28,10 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 # Expose port 8080
 EXPOSE 8080
 
-# Create a non-root user and group
-RUN microdnf install shadow-utils && \
-    useradd -r -u 1001 appuser
+# Create a non-root user manually
+RUN mkdir /home/appuser && \
+    echo "appuser:x:1001:1001::/home/appuser:/sbin/nologin" >> /etc/passwd && \
+    echo "appuser:x:1001:" >> /etc/group
 
 # Switch to the non-root user
 USER 1001
